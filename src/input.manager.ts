@@ -18,6 +18,25 @@ export class InputManager {
         }
     }
 
+    getSelectionRange(): { start: number, end: number } {
+        let start = 0;
+        let end = 0;
+
+        if (this.htmlInputElement && this.htmlInputElement.setSelectionRange) {
+            start = this.htmlInputElement.selectionStart;
+            end = this.htmlInputElement.selectionEnd;
+        }
+        return { start, end };
+    }
+
+    setSelectionRangeAt(start: number, end: number): void {
+        if (this.htmlInputElement && this.htmlInputElement.setSelectionRange) {
+            const newStart = start < 0 ? 0 : start;
+            const newEnd = end < newStart ? newStart : end;
+            this.htmlInputElement.setSelectionRange(newStart, newEnd);
+        }
+    }
+
     updateValueAndCursor(newRawValue: string, oldLength: number, selectionStart: number): void {
         this.rawValue = newRawValue;
         let newLength = newRawValue.length;
