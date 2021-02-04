@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.3](https://github.com/pabradley2000/ngx-currency/compare/v2.5.2...v2.5.3) (2021-02-04)
+
+
+### Bug Fixes
+
+* Fix number number cursor issue ([0bc9f23]https://github.com/pabradley2000/ngx-currency/commit/0bc9f239322df4bf318bc410cb1f2036d51f76a8))
+
 ### [2.5.2](https://github.com/nbfontana/ngx-currency/compare/v2.5.1...v2.5.2) (2020-11-10)
 
 
