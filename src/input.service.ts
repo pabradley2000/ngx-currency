@@ -188,14 +188,38 @@ export class InputService {
 
     changeToNegative(): void {
         if (this.options.allowNegative && this.rawValue != "" && this.rawValue.charAt(0) != "-" && this.value != 0) {
+            // Get initial cursor position, length
+            let selectionRange: { start: number, end: number }, initialLength: number;
+            if (this.options.inputMode === CurrencyMaskInputMode.NATURAL) {
+                selectionRange = this.inputManager.getSelectionRange();
+                initialLength = this.rawValue.length;
+            }
+
             // Apply the mask to ensure the min and max values are enforced.
             this.rawValue = this.applyMask(false, "-" + this.rawValue);
+
+            // Move cursor to account for minus sign
+            if (this.options.inputMode === CurrencyMaskInputMode.NATURAL && this.rawValue.length === initialLength + 1) {
+                this.inputManager.setSelectionRangeAt(selectionRange.start + 1, selectionRange.end + 1);
+            }
         }
     }
-
+ 
     changeToPositive(): void {
+        // Get initial cursor position, length
+        let selectionRange: { start: number, end: number }, initialLength: number;
+        if (this.options.inputMode === CurrencyMaskInputMode.NATURAL) {
+            selectionRange = this.inputManager.getSelectionRange();
+            initialLength = this.rawValue.length;
+        }
+
         // Apply the mask to ensure the min and max values are enforced.
         this.rawValue = this.applyMask(false, this.rawValue.replace("-", ""));
+
+        // Move cursor to account removal of minus sign
+        if (this.options.inputMode === CurrencyMaskInputMode.NATURAL && this.rawValue.length === initialLength - 1) {
+            this.inputManager.setSelectionRangeAt(selectionRange.start - 1, selectionRange.end - 1);
+        }
     }
 
     removeNumber(keyCode: number): void {
